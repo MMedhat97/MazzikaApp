@@ -6,12 +6,21 @@ import 'package:mazzika/controller/play_controller.dart';
 import 'package:mazzika/views/player.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
+  State<Home> createState() => _HomeState();
+
+}
+
+class _HomeState extends State<Home> {
+  Icon searchIcon = Icon(Icons.search);
+  Widget searchBar = Text("Mazzika",style: ourStyle(size: 18,family: bold,color: whiteColor));
+  @override
   Widget build(BuildContext context) {
     var controller = Get.put(PlayerController());
+
 
 
 
@@ -20,13 +29,34 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: bgDarkColor,
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.search,color: whiteColor,))
+          IconButton(onPressed: (){
+            setState(() {
+              if(this.searchIcon.icon ==Icons.search){
+                this.searchIcon=Icon(Icons.cancel);
+                this.searchBar =TextField(
+                  textInputAction: TextInputAction.go,
+                  style: ourStyle(
+                    size: 18,
+                    color: whiteColor,
+                    family: regular,
+                  ),
+                );
+
+              }else{
+                this.searchIcon = Icon(Icons.search);
+                this.searchBar = Text("Mazzika",style: ourStyle(size: 18,family: bold,color: whiteColor));
+
+              }
+            });
+
+          }, icon: searchIcon,color: whiteColor)
         ],
         leading: Icon(Icons.sort_rounded,color: whiteColor,),
-        title: Text("Mazzika",style: ourStyle(size: 18,family: bold,color: whiteColor),),
+        title: searchBar,
       ),
-      
+
       body: FutureBuilder<List<SongModel>>(
+
         future: controller.audioQuery.querySongs(
           ignoreCase: true,
           orderType: OrderType.ASC_OR_SMALLER,
@@ -47,10 +77,12 @@ class Home extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
+
                 physics: const BouncingScrollPhysics(),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (BuildContext context , int index){
                   return Container(
+
                     margin: const EdgeInsets.only(bottom:4),
                     child: Obx(()=>ListTile(
                         shape: RoundedRectangleBorder(
@@ -59,10 +91,12 @@ class Home extends StatelessWidget {
                         tileColor: bgColor,
                         title:
                         Text("${snapshot.data![index].displayNameWOExt}"
+                          ,maxLines: 2
                           ,style: ourStyle(size: 15,family: bold),
                         ),
                         subtitle:
                         Text("${snapshot.data![index].artist}"
+                          ,maxLines: 2
                           ,style: ourStyle(size: 15,family: bold),
                         ),
 
