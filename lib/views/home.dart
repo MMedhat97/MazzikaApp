@@ -17,13 +17,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Icon searchIcon = Icon(Icons.search);
   Widget searchBar = Text("Mazzika",style: ourStyle(size: 18,family: bold,color: whiteColor));
+  var controller = Get.put(PlayerController());
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(PlayerController());
-
-
-
-
     return Scaffold(
       backgroundColor: bgDarkColor,
       appBar: AppBar(

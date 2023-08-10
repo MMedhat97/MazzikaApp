@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
 
+
+
     <uses-permission android:name="android_permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android_permission.WRITE_EXTERNAL_STORAGE"/>
 
